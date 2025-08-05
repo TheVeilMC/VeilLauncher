@@ -1,0 +1,53 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "theveil-launcher",
+      "changelog-sections": [
+        { "type": "feat", "section": "🚀 Features", "hidden": false },
+        { "type": "fix", "section": "🐛 Bug Fixes", "hidden": false },
+        {
+          "type": "perf",
+          "section": "⚡ Performance Improvements",
+          "hidden": false
+        },
+        { "type": "revert", "section": "⏪ Reverts", "hidden": false },
+        { "type": "docs", "section": "📚 Documentation", "hidden": false },
+        { "type": "style", "section": "🎨 Styles", "hidden": false },
+        {
+          "type": "refactor",
+          "section": "♻️ Code Refactoring",
+          "hidden": false
+        },
+        { "type": "test", "section": "🧪 Tests", "hidden": false },
+        { "type": "build", "section": "🔧 Build System", "hidden": false },
+        {
+          "type": "ci",
+          "section": "⚙️ Continuous Integration",
+          "hidden": false
+        },
+        { "type": "chore", "section": "🧹 Miscellaneous", "hidden": false }
+      ],
+      "extra-files": ["app/package.json", "app/package-lock.json"]
+    }
+  },
+  "release-search-depth": 50,
+  "separate-pull-requests": false,
+  "target-branch": "release",
+  "plugins": ["node-workspace"],
+  "changelog": {
+    "sections": [
+      { "type": "feat", "section": "🚀 Features" },
+      { "type": "fix", "section": "🐛 Bug Fixes" },
+      { "type": "perf", "section": "⚡ Performance Improvements" },
+      { "type": "revert", "section": "⏪ Reverts" },
+      { "type": "docs", "section": "📚 Documentation" },
+      { "type": "style", "section": "🎨 Styles" },
+      { "type": "refactor", "section": "♻️ Code Refactoring" },
+      { "type": "test", "section": "🧪 Tests" },
+      { "type": "build", "section": "🔧 Build System" },
+      { "type": "ci", "section": "⚙️ Continuous Integration" },
+      { "type": "chore", "section": "🧹 Miscellaneous" }
+    ]
+  }
+}

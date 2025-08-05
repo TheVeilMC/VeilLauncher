@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["renderer/src/*"],
+      "@components/*": ["renderer/src/components/*"],
+      "@views/*": ["renderer/src/views/*"],
+      "@stores/*": ["renderer/src/stores/*"],
+      "@services/*": ["renderer/src/services/*"],
+      "@utils/*": ["renderer/src/utils/*"],
+      "@assets/*": ["renderer/src/assets/*"]
+    }
+  },
+  "include": [
+    "renderer/src/**/*.ts",
+    "renderer/src/**/*.d.ts",
+    "renderer/src/**/*.tsx",
+    "renderer/src/**/*.vue"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

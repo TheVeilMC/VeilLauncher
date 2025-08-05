@@ -1,0 +1,28 @@
+name: Bootstrap Release Please (Run Once)
+
+on:
+  workflow_dispatch: # Manual trigger only
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1 # Only fetch the latest commit
+
+      - name: Bootstrap Release Please
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+          target-branch: release
+          bootstrap-sha: ${{ github.sha }} # Start from current commit
+          initial-version: 1.0.0 # Set your starting version

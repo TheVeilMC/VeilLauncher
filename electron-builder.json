@@ -1,0 +1,126 @@
+{
+  "appId": "net.ogmatrix.thveil.launcher",
+  "productName": "VeilLauncher",
+  "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
+  "directories": {
+    "output": "electron-dist"
+  },
+  "files": [
+    "dist/**/*",
+    "node_modules/**/*",
+    "package.json",
+    "shared/**/*",
+    "!node_modules/**/*.{md,txt,map}",
+    "!node_modules/**/test/**",
+    "!node_modules/**/tests/**",
+    "!node_modules/**/*.d.ts"
+  ],
+  "extraMetadata": {
+    "main": "dist/main/core/index.js",
+    "name": "veil-launcher",
+    "productName": "VeilLauncher"
+  },
+  "asar": true,
+  "asarUnpack": [
+    "node_modules/ws/**/*",
+    "node_modules/three/**/*",
+    "node_modules/@types/**/*",
+    "shared/**/*"
+  ],
+  "publish": {
+    "provider": "github",
+    "owner": "TheVeilMC",
+    "repo": "LauncherApp"
+  },
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64", "arm64"]
+      },
+      {
+        "target": "portable",
+        "arch": ["x64", "arm64"]
+      },
+      {
+        "target": "zip",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "icon": "build/icon.ico",
+    "publisherName": "OGMatrix",
+    "verifyUpdateCodeSignature": false,
+    "artifactName": "${name}-${version}-${os}-${arch}.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "license": "LICENSE",
+    "installerIcon": "build/icon.ico",
+    "uninstallerIcon": "build/icon.ico",
+    "installerHeaderIcon": "build/icon.ico",
+    "deleteAppDataOnUninstall": true,
+    "artifactName": "${productName}-${version}-setup.${ext}"
+  },
+  "mac": {
+    "target": [
+      {
+        "target": "zip",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "icon": "build/icon.icns",
+    "category": "public.app-category.games",
+    "hardenedRuntime": true,
+    "entitlements": "build/entitlements.mac.plist",
+    "entitlementsInherit": "build/entitlements.mac.plist",
+    "gatekeeperAssess": false,
+    "artifactName": "${name}-${version}-${os}-${arch}.${ext}"
+  },
+  "dmg": {
+    "contents": [
+      {
+        "x": 130,
+        "y": 220
+      },
+      {
+        "x": 410,
+        "y": 220,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ],
+    "artifactName": "${productName}-${version}.${ext}"
+  },
+  "linux": {
+    "target": [
+      {
+        "target": "AppImage",
+        "arch": ["x64", "arm64"]
+      },
+      {
+        "target": "deb",
+        "arch": ["x64", "arm64"]
+      },
+      {
+        "target": "rpm",
+        "arch": ["x64", "arm64"]
+      },
+      {
+        "target": "tar.gz",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "icon": "build/icon.png",
+    "category": "Game",
+    "synopsis": "TheVeil Launcher is a Minecraft game launcher designed to provide a seamless experience for players of The Veil modpack.",
+    "description": "TheVeil Launcher is a custom launcher for the Minecraft modpack The Veil, providing easy access to the modpack and its features. It supports multiple platforms including Windows, macOS, and Linux, and offers a user-friendly interface for managing game installations and updates.",
+    "maintainer": "OGMatrix <matrix@ogmatrix.net>",
+    "artifactName": "${name}-${version}-${os}-${arch}.${ext}"
+  },
+  "snap": {
+    "summary": "TheVeil Launcher is a Minecraft game launcher designed to provide a seamless experience for players of The Veil modpack."
+  }
+}
