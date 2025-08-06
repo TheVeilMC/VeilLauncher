@@ -45,12 +45,48 @@
       <span class="text-xs text-primary-200">{{
         authStore.activeAccount.username
       }}</span>
-      <div
-        class="h-4 bg-gradient-to-br from-accent-blue to-accent-cyan rounded-sm flex items-center justify-center"
+    </div>
+
+    <!-- Notification Bell -->
+    <div class="relative" @mousedown.stop>
+      <button
+        @click="showNotificationDropdown = !showNotificationDropdown"
+        @mouseenter="showNotificationDropdown = true"
+        :class="[
+          'w-8 h-8 flex items-center justify-center hover:bg-primary-700/50 transition-all duration-300 rounded-sm relative',
+          {
+            'animate-pulse': notificationStore.unreadCount > 0,
+            'bg-accent-blue/20': showNotificationDropdown,
+          }
+        ]"
       >
-        <User class="w-3 h-3 text-white" />
-        <span class="text-xs text-white">44</span>
-      </div>
+        <Bell 
+          :class="[
+            'w-4 h-4 transition-all duration-300',
+            notificationStore.unreadCount > 0 ? 'text-accent-blue animate-bounce' : 'text-primary-300'
+          ]" 
+        />
+        
+        <!-- Unread Count Badge -->
+        <div
+          v-if="notificationStore.unreadCount > 0"
+          :class="[
+            'absolute -top-1 -right-1 min-w-[16px] h-4 bg-status-error rounded-full flex items-center justify-center text-[10px] font-bold text-white',
+            'animate-pulse shadow-lg',
+            notificationStore.unreadCount > 9 ? 'px-1' : ''
+          ]"
+        >
+          {{ notificationStore.unreadCount > 99 ? '99+' : notificationStore.unreadCount }}
+        </div>
+      </button>
+
+      <!-- Notification Dropdown -->
+      <NotificationDropdown 
+        v-if="showNotificationDropdown"
+        @close="showNotificationDropdown = false"
+        @mouseleave="showNotificationDropdown = false"
+        class="absolute top-full right-0 mt-2 z-50"
+      />
     </div>
 
     <!-- Right side - Window controls -->
@@ -78,14 +114,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Minus, Square, X, User } from 'lucide-vue-next';
+import { ref, onMounted } from 'vue';
+import { Minus, Square, X, User, Bell } from 'lucide-vue-next';
 import { useAuthStore } from '@/stores/auth';
 import { useAppStore } from '@/stores/app';
+import { useNotificationStore } from '@/stores/notifications';
+import NotificationDropdown from '../notifications/NotificationDropdown.vue';
+import { useNotificationStore } from '@/stores/notifications';
+import NotificationDropdown from '../notifications/NotificationDropdown.vue';
 
 const authStore = useAuthStore();
 const appStore = useAppStore();
+const notificationStore = useNotificationStore();
+const notificationStore = useNotificationStore();
 const titlebarRef = ref<HTMLElement>();
+const showNotificationDropdown = ref(false);
+
+onMounted(async () => {
+  await notificationStore.initialize();
+});
+const showNotificationDropdown = ref(false);
 
 // JavaScript-based window dragging
 function startDrag(e: MouseEvent) {

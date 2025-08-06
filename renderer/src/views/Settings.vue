@@ -321,6 +321,11 @@
             </div>
           </div>
 
+          <!-- Notification Settings -->
+          <div class="glass-card p-6">
+            <NotificationSettings />
+          </div>
+
           <!-- Save Button -->
           <div class="flex justify-end">
             <button
@@ -344,6 +349,7 @@ import { onMounted } from 'vue';
 import { ExternalLink } from 'lucide-vue-next';
 import { useSettingsStore } from '@/stores/settings';
 import Sidebar from '@/components/layout/Sidebar.vue';
+import NotificationSettings from '@/components/notifications/NotificationSettings.vue';
 import { ipcService } from '@/services/ipc';
 import router from '@/router';
 

@@ -93,6 +93,8 @@ export const useAuthStore = defineStore('auth', () => {
           type: 'success',
           title: 'Login Successful',
           message: `Welcome back, ${response.data.account.username}!`,
+          priority: { level: 'normal' },
+          category: 'system',
         });
       } else if (response.error === 'authorization_pending') {
         // Authorization is still pending - continue polling
@@ -132,6 +134,8 @@ export const useAuthStore = defineStore('auth', () => {
             error.response?.data?.message ||
             error.message ||
             'Failed to authenticate with Microsoft',
+          priority: { level: 'high', flashTaskbar: true },
+          category: 'system',
         });
       }
     }
@@ -188,12 +192,16 @@ export const useAuthStore = defineStore('auth', () => {
         type: 'info',
         title: 'Logged Out',
         message: 'You have been logged out successfully',
+        priority: { level: 'low' },
+        category: 'system',
       });
     } catch (error) {
       notificationStore.addNotification({
         type: 'error',
         title: 'Logout Failed',
         message: 'Failed to logout properly',
+        priority: { level: 'normal' },
+        category: 'system',
       });
     }
   }

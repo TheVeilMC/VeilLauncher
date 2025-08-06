@@ -37,6 +37,8 @@ export const useAppStore = defineStore('app', () => {
         type: 'error',
         title: 'Initialization Failed',
         message: 'Failed to initialize the application',
+        priority: { level: 'critical', flashTaskbar: true, persistUntilRead: true },
+        category: 'system',
       });
     } finally {
       isLoading.value = false;
@@ -63,6 +65,23 @@ export const useAppStore = defineStore('app', () => {
         type: 'info',
         title: 'Update Available',
         message: 'A new version of The Veil is available. Please update.',
+        priority: { level: 'high', flashTaskbar: true },
+        category: 'update',
+        actions: [
+          {
+            id: 'update-now',
+            label: 'Update Now',
+            action: 'navigate',
+            target: '/update',
+            style: 'primary',
+          },
+          {
+            id: 'dismiss',
+            label: 'Later',
+            action: 'dismiss',
+            style: 'secondary',
+          },
+        ],
       });
 
       updateAvailable.value = true;
@@ -81,6 +100,8 @@ export const useAppStore = defineStore('app', () => {
         type: 'success',
         title: 'Cache Cleared',
         message: 'Application cache has been cleared',
+        priority: { level: 'low' },
+        category: 'system',
       });
     } catch (error) {
       console.error('Failed to clear cache:', error);
@@ -88,6 +109,8 @@ export const useAppStore = defineStore('app', () => {
         type: 'error',
         title: 'Clear Failed',
         message: 'Failed to clear cache',
+        priority: { level: 'normal' },
+        category: 'system',
       });
     }
   }

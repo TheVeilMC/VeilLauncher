@@ -25,6 +25,7 @@
 import { onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useAppStore } from '@/stores/app';
+import { useNotificationStore } from '@/stores/notifications';
 import TitleBar from '@/components/layout/TitleBar.vue';
 import AuthModal from '@/components/auth/AuthModal.vue';
 import LoadingOverlay from '@/components/ui/LoadingOverlay.vue';
@@ -34,12 +35,16 @@ import { storeToRefs } from 'pinia';
 
 const authStore = useAuthStore();
 const appStore = useAppStore();
+const notificationStore = useNotificationStore();
 
 const { updateAvailable } = storeToRefs(appStore);
 
 onMounted(async () => {
   // Initialize auth from storage first
   await authStore.initializeFromStorage();
+
+  // Initialize notifications
+  await notificationStore.initialize();
 
   // Then initialize the app
   await appStore.initialize();

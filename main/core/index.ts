@@ -6,6 +6,7 @@ import { SecurityManager } from '../managers/SecurityManager';
 import { TrayManager } from '../managers/TrayManager';
 import { logger } from './logger';
 import { InstanceManager } from '../managers/InstanceManager';
+import { NotificationService } from '../services/NotificationService';
 
 class VeilLauncher {
   private windowManager: WindowManager;
@@ -13,12 +14,14 @@ class VeilLauncher {
   private securityManager: SecurityManager;
   private trayManager: TrayManager;
   private instanceManager: InstanceManager;
+  private notificationService: NotificationService;
 
   constructor() {
     this.windowManager = new WindowManager();
     this.securityManager = new SecurityManager();
     this.trayManager = new TrayManager();
     this.instanceManager = new InstanceManager();
+    this.notificationService = new NotificationService();
   }
 
   public async initialize(): Promise<void> {
@@ -59,6 +62,7 @@ class VeilLauncher {
           mainWindow,
           this.instanceManager
         );
+        this.notificationService.initialize(mainWindow);
         // Create system tray
         this.trayManager.create(mainWindow);
 

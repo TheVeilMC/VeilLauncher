@@ -62,9 +62,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Home, Clock, Settings, Palette, Code } from 'lucide-vue-next';
+import { Home, Clock, Settings, Palette, Code, Bell } from 'lucide-vue-next';
 import SidebarItem from './SidebarItem.vue';
 import AccountSwitcher from '../auth/AccountSwitcher.vue';
+import { useNotificationStore } from '@/stores/notifications';
+
+const notificationStore = useNotificationStore();
 
 const navigationItems = computed(() => [
   {
@@ -72,6 +75,13 @@ const navigationItems = computed(() => [
     label: 'Home',
     icon: Home,
     description: 'Dashboard and quick actions',
+  },
+  {
+    name: 'Notifications',
+    label: 'Notifications',
+    icon: Bell,
+    description: 'View and manage notifications',
+    badge: notificationStore.unreadCount > 0 ? notificationStore.unreadCount : undefined,
   },
   {
     name: 'Changelog',

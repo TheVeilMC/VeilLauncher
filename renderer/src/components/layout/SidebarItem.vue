@@ -18,6 +18,18 @@
         {{ item.description }}
       </div>
     </div>
+    
+    <!-- Badge for unread count -->
+    <div 
+      v-if="item.badge"
+      :class="[
+        'min-w-[18px] h-[18px] bg-status-error rounded-full flex items-center justify-center text-[10px] font-bold text-white',
+        'animate-pulse shadow-lg',
+        item.badge > 9 ? 'px-1' : ''
+      ]"
+    >
+      {{ item.badge > 99 ? '99+' : item.badge }}
+    </div>
   </button>
 </template>
 
@@ -27,6 +39,7 @@ interface SidebarItem {
   label: string;
   icon: any;
   description?: string;
+  badge?: number;
 }
 
 interface Props {

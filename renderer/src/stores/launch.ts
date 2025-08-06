@@ -55,6 +55,8 @@ export const useLaunchStore = defineStore('launch', () => {
         type: 'success',
         title: 'Update Complete',
         message: 'The Veil has been updated successfully.',
+        priority: { level: 'normal' },
+        category: 'game',
       });
       update.value = false; // Reset update flag after updating
     }
@@ -98,6 +100,8 @@ export const useLaunchStore = defineStore('launch', () => {
         type: 'error',
         title: 'Launch Failed',
         message: error.message || 'Failed to launch The Veil',
+        priority: { level: 'high', flashTaskbar: true },
+        category: 'game',
       });
 
       status.value = {
@@ -126,12 +130,16 @@ export const useLaunchStore = defineStore('launch', () => {
         type: 'info',
         title: 'Game Stopped',
         message: 'The Veil has been stopped',
+        priority: { level: 'low' },
+        category: 'game',
       });
     } catch (error: any) {
       notificationStore.addNotification({
         type: 'error',
         title: 'Stop Failed',
         message: 'Failed to stop the game',
+        priority: { level: 'normal' },
+        category: 'game',
       });
     }
   }
@@ -243,6 +251,22 @@ export const useLaunchStore = defineStore('launch', () => {
               title: 'Update Available',
               message:
                 'A new update for The Veil is available. Please update to continue.',
+            priority: { level: 'high', flashTaskbar: true },
+            category: 'update',
+            actions: [
+              {
+                id: 'update-now',
+                label: 'Update Now',
+                action: 'custom',
+                style: 'primary',
+              },
+              {
+                id: 'dismiss',
+                label: 'Later',
+                action: 'dismiss',
+                style: 'secondary',
+              },
+            ],
             });
           }
           updateData.value = {

@@ -48,6 +48,25 @@ contextBridge.exposeInMainWorld('electronAPI', {
   showNotification: (options: any) =>
     ipcRenderer.invoke('show-notification', options),
 
+  // Enhanced Notification System
+  notificationCreate: (notification: any) =>
+    ipcRenderer.invoke('notification-create', notification),
+  notificationGetAll: () => ipcRenderer.invoke('notification-get-all'),
+  notificationMarkRead: (id: string) =>
+    ipcRenderer.invoke('notification-mark-read', id),
+  notificationMarkAllRead: () =>
+    ipcRenderer.invoke('notification-mark-all-read'),
+  notificationDismiss: (id: string) =>
+    ipcRenderer.invoke('notification-dismiss', id),
+  notificationClearAll: () => ipcRenderer.invoke('notification-clear-all'),
+  notificationGetUnreadCount: () =>
+    ipcRenderer.invoke('notification-get-unread-count'),
+  notificationGetSettings: () =>
+    ipcRenderer.invoke('notification-get-settings'),
+  notificationUpdateSettings: (settings: any) =>
+    ipcRenderer.invoke('notification-update-settings', settings),
+  notificationCleanup: () => ipcRenderer.invoke('notification-cleanup'),
+
   // Event listeners
   onWindowFocus: (callback: () => void) => {
     ipcRenderer.on('window-focus', callback);
@@ -76,6 +95,31 @@ contextBridge.exposeInMainWorld('electronAPI', {
     return () => ipcRenderer.removeListener('update-downloaded', callback);
   },
 
+  // Notification event listeners
+  onNotificationCreated: (callback: (notification: any) => void) => {
+    ipcRenderer.on('notification-created', callback as any);
+    return () => ipcRenderer.removeListener('notification-created', callback as any);
+  },
+
+  onNotificationRead: (callback: (notification: any) => void) => {
+    ipcRenderer.on('notification-read', callback as any);
+    return () => ipcRenderer.removeListener('notification-read', callback as any);
+  },
+
+  onNotificationDismissed: (callback: (notification: any) => void) => {
+    ipcRenderer.on('notification-dismissed', callback as any);
+    return () => ipcRenderer.removeListener('notification-dismissed', callback as any);
+  },
+
+  onNotificationsCleared: (callback: () => void) => {
+    ipcRenderer.on('notifications-cleared', callback);
+    return () => ipcRenderer.removeListener('notifications-cleared', callback);
+  },
+
+  onNotificationClicked: (callback: (notification: any) => void) => {
+    ipcRenderer.on('notification-clicked', callback as any);
+    return () => ipcRenderer.removeListener('notification-clicked', callback as any);
+  },
   windowMoveBy: (deltaX: number, deltaY: number) =>
     ipcRenderer.invoke('window-move-by', deltaX, deltaY),
 
@@ -152,6 +196,11 @@ declare global {
       ) => () => void;
       onUpdateAvailable: (callback: () => void) => () => void;
       onUpdateDownloaded: (callback: () => void) => () => void;
+      onNotificationCreated: (callback: (notification: any) => void) => () => void;
+      onNotificationRead: (callback: (notification: any) => void) => () => void;
+      onNotificationDismissed: (callback: (notification: any) => void) => () => void;
+      onNotificationsCleared: (callback: () => void) => () => void;
+      onNotificationClicked: (callback: (notification: any) => void) => () => void;
       openDevTools?: () => Promise<void>;
     };
   }
